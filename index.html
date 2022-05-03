@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="icon" type="image/png" href="https://www.google.com/s2/u/0/favicons?domain=udemy.com">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <title>Quote Generator</title>
+</head>
+<body>
+<div class="container" id="container">
+    <i class="icon fa-solid fa-quote-left"></i>
+    <span class="quote" id="quote"></span>
+    <div class="author" id="author"></div>
+
+    <div class="footer">
+        <button id="twitter" class="btn twitter"><i class="fa-brands fa-twitter"></i></button>
+        <button id="new-quote" class="btn">New Quote</button>
+    </div>
+</div>
+
+<!--Loader-->
+<div class="loader" id="loader"></div>
+<!-- Include Script -->
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script src="script.js"></script>
+</body>
+</html>
