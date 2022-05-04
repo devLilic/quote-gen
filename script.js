@@ -1,6 +1,6 @@
-let quotes = [];
+let quoteData;
 const container = document.getElementById('container');
-const quote = document.getElementById('quote');
+const quoteTag = document.getElementById('quote');
 const author = document.getElementById('author');
 const newQuote = document.getElementById('new-quote');
 const twitBtn = document.getElementById('twitter');
@@ -10,25 +10,25 @@ newQuote.addEventListener('click', getQoutesFromAPI);
 twitBtn.addEventListener('click', twitQuote);
 
 function showLoader() {
-    container.classList.add('hidden');
-    loader.classList.remove('hidden');
+    container.hidden = true;
+    loader.hidden = false;
 }
 
 function hideLoader() {
-    container.classList.remove('hidden')
-    loader.classList.add('hidden')
+    container.hidden = false;
+    loader.hidden = true;
 }
 
 function updateDOM() {
-    quotes.quoteText.length > 120 ?
-        quote.classList.add('text-smaller') :
-        quote.classList.remove('text-smaller');
-    quote.innerText = quotes.quoteText;
-    author.innerText = quotes.quoteAuthor;
+    quoteData.quoteText.length > 120 ?
+        quoteTag.classList.add('text-smaller') :
+        quoteTag.classList.remove('text-smaller');
+    quoteTag.innerText = quoteData.quoteText;
+    author.innerText = quoteData.quoteAuthor !== "" ? quoteData.quoteAuthor : 'Unknown';
 }
 
 function twitQuote() {
-    const twitUrl = `https://twitter.com/intent/tweet?text=${quotes.quoteText} - ${quotes.quoteAuthor}`;
+    const twitUrl = `https://twitter.com/intent/tweet?text=${quoteData.quoteText} - ${quoteData.quoteAuthor}`;
     window.open(twitUrl, '_blank');
 }
 
@@ -38,12 +38,17 @@ async function getQoutesFromAPI() {
     const apiUrl = 'https://api.forismatic.com/api/1.0/?method=getQuote&lang=en&format=json'
     try {
         let response = await fetch(proxy + apiUrl);
-        quotes = await response.json();
+        let quotesAsText = await response.text();
+        quoteData = JSON.parse(replaceSingleQuote(quotesAsText));
         updateDOM();
     } catch (error) {
-        console.log('error here: ', error);
+        console.log('error here: ', error, response);
     }
     hideLoader();
+}
+
+function replaceSingleQuote(text){
+    return text.replace(/\\'/g, "'");
 }
 
 getQoutesFromAPI();
